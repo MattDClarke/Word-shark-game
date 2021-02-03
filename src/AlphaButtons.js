@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './AlphaButtons.css';
 
-class AlphaButtons extends Component {
-    render() {
+function AlphaButtons(props) {
         return (
             <div className='AlphaButtons'>
-                {this.props.generateButtons(this.props.letters)}
+                {props.generateButtons(props.letters)}
             </div>
         )
-    }
 }
-
 
 export default AlphaButtons;
