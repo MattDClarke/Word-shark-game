@@ -5,7 +5,7 @@ import WordShark from "./WordShark";
 function App() {
     return (
       <div className="App">
-        <WordShark maxWrong={6} />
+        <WordShark maxWrong={8} />
       </div>
     );
 }

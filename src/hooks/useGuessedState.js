@@ -17,13 +17,9 @@ function useGuessedState(randomWord) {
                 .map(letter => (guessed.has(letter) ? letter : "_"));
         },
 
-        /** handle a guessed letter:
-          - add to guessed letters
-          - if not in answer, increase number-wrong guesses
-        */
         handleGuess: (e) => {
             const letter = e.target.value;
-            // dnt change mutable state directly
+            // dnt change mutable data types directly
             const newSet = new Set(guessed.add(letter));
             setGuessed(newSet);
             setNWrong(nWrong + (answer.includes(letter) ? 0 : 1));

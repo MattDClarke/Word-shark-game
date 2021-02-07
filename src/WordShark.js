@@ -1,18 +1,18 @@
 import React from 'react';
 import { randomWord } from './words';
-
-import AlphaButtons from './AlphaButtons';
 import useGuessedState from './hooks/useGuessedState';
 import './WordShark.css';
-import img0 from './0.jpg';
-import img1 from './1.jpg';
-import img2 from './2.jpg';
-import img3 from './3.jpg';
-import img4 from './4.jpg';
-import img5 from './5.jpg';
-import img6 from './6.jpg';
+import img0 from './images/0.jpg';
+import img1 from './images/1.jpg';
+import img2 from './images/2.jpg';
+import img3 from './images/3.jpg';
+import img4 from './images/4.jpg';
+import img5 from './images/5.jpg';
+import img6 from './images/6.jpg';
+import img7 from './images/7.jpg';
+import img8 from './images/8.jpg';
 
-function WordShark(props) {
+function WordShark({maxWrong, images, letters}) {
   const { guessed, answer, nWrong, guessedWord, handleGuess, restart } = useGuessedState(randomWord);
 
 
@@ -23,41 +23,46 @@ function WordShark(props) {
           value={letter}
           onClick={handleGuess}
           disabled={guessed.has(letter)}
+          className="ltrBtn"
         >
           {letter}
         </button>
       ));
   }
 
-  const gameOver = nWrong >= props.maxWrong;
+  const gameOver = nWrong >= maxWrong;
   const isWinner = guessedWord().join('') === answer;
-  const altText = ` ${nWrong} wrong guess${nWrong > 1 ? 'es' : ''}, ${props.maxWrong - nWrong} guess${props.maxWrong - nWrong > 1 ? 'es' : ''} left`;
+  const altText = ` ${nWrong} wrong guess${nWrong !== 1 ? 'es' : ''}, ${maxWrong - nWrong} guess${maxWrong - nWrong !== 1 ? 'es' : ''} left`;
   const loseMsg = `You lose! The correct word is: ${answer}`;
   const winMsg = 'You win!';
-  let gameState = <AlphaButtons letters={props.letters} generateButtons={generateButtons} />;
-  if (isWinner) gameState = <div className="Hangman-msg-win">{winMsg}</div>;
-  if (gameOver) gameState = <div className="Hangman-msg-lose">{loseMsg}</div>;
+  let gameState = <div className='AlphaButtons'>
+    {generateButtons(letters)}
+  </div>
+  if (isWinner) gameState = <div className="Hangman-msg-win"><span>{winMsg}</span></div>;
+  if (gameOver) gameState = <div className="Hangman-msg-lose"><span>{ loseMsg }</span ></div>;
+
+  const fitText = 5.7108 * (answer.length ** -0.933);
 
   
   return (
     <div className='Hangman'>
-      <h1 className="Hangman-header">Hangman</h1>
-
-      <img src={props.images[nWrong]} alt={altText} />
-
-      <div className="Hangman-ltrContainer">
-        <p className="Hangman-wrongGuesses">{`Incorrect guesses: ${nWrong}`}</p>
-        <p className='Hangman-word'>{guessedWord()}</p>
-        {gameState}
+      <img src={images[nWrong]} alt={altText} />
+      <div className="Hangman-guessContainer">
+        <p className="Hangman-guessesLeft">{`${maxWrong - nWrong} guess${(nWrong === (maxWrong - 1)) ? '' : 'es'} left`}</p>
+        <p className='Hangman-word' style={{ transform: `scale(
+        ${fitText})` }}>{guessedWord()}</p>
       </div>
-      <button className="Hangman-restartBtn" onClick={restart}>Restart</button>
+      <div className="letter-buttons">
+        {gameState}
+        <button className="Hangman-restartBtn" onClick={restart}>Restart</button>
+      </div>
     </div>
   );
 }
 
 WordShark.defaultProps = {
-  // maxWrong: 6,
-  images: [img0, img1, img2, img3, img4, img5, img6],
+  // maxWrong: 8,
+  images: [img0, img1, img2, img3, img4, img5, img6, img7, img8],
   letters: "abcdefghijklmnopqrstuvwxyz"
 }
 
