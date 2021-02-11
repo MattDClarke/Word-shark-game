@@ -13,15 +13,27 @@
   padding-top: 20px;
 }
 
-
-.Hangman img {
+.Hangman-imgContainer {
   grid-area: image;
+  position: relative;
   width: 40vw;
-  border: 10px solid white;
-  border-radius: 10px;
+}
+
+.Hangman-WordSharkBackgroundImg {
+  width: 100%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.27),
     0 0 40px rgba(0, 0, 0, 0.06) inset;
+  border: 10px solid white;
+  border-radius: 10px;
 }
+
+.Hangman-WordSharkOverlayImgs {
+  position: absolute;
+  width: 100%;
+  top: 10px;
+  left: 10px;
+}
+
 
 .letter-buttons {
   grid-area: letter-buttons;
@@ -158,13 +170,23 @@
       "letter-buttons";
     padding: 5px;
   }  
-  .Hangman img {
+
+  .Hangman-imgContainer {
     width: 290px;
-    border: 5px solid white;
     margin: 10px auto;
+  }
+  
+  .Hangman-WordSharkBackgroundImg {
+    border: 5px solid white;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.27),
     0 0 20px rgba(0, 0, 0, 0.06) inset;
   }
+  
+  .Hangman-WordSharkOverlayImgs {
+    top: 5px;
+    left: 5px;    
+  }
+
   .Hangman-guessContainer {
     width: 100%;
   }

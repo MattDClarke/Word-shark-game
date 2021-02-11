@@ -2,15 +2,16 @@ import React from 'react';
 import { randomWord } from './words';
 import useGuessedState from './hooks/useGuessedState';
 import './WordShark.css';
-import img0 from './images/0.jpg';
-import img1 from './images/1.jpg';
-import img2 from './images/2.jpg';
-import img3 from './images/3.jpg';
-import img4 from './images/4.jpg';
-import img5 from './images/5.jpg';
-import img6 from './images/6.jpg';
-import img7 from './images/7.jpg';
-import img8 from './images/8.jpg';
+import background from './images/word-shark_background.jpg';
+import img0 from './images/0.svg';
+import img1 from './images/1.svg';
+import img2 from './images/2.svg';
+import img3 from './images/3.svg';
+import img4 from './images/4.svg';
+import img5 from './images/5.svg';
+import img6 from './images/6.svg';
+import img7 from './images/7.svg';
+import img8 from './images/8.svg';
 
 function WordShark({maxWrong, images, letters}) {
   const { guessed, answer, nWrong, guessedWord, handleGuess, restart } = useGuessedState(randomWord);
@@ -46,7 +47,10 @@ function WordShark({maxWrong, images, letters}) {
   
   return (
     <div className='Hangman'>
-      <img src={images[nWrong]} alt={altText} />
+      <div className="Hangman-imgContainer">
+        <img className="Hangman-WordSharkBackgroundImg" src={background} alt="background for Word Shark, showing stickman and shark"/>
+        <img className="Hangman-WordSharkOverlayImgs" src={images[nWrong]} alt={altText} />
+      </div>
       <div className="Hangman-guessContainer">
         <p className="Hangman-guessesLeft">{`${maxWrong - nWrong} guess${(nWrong === (maxWrong - 1)) ? '' : 'es'} left`}</p>
         <p className='Hangman-word' style={{ transform: `scale(
