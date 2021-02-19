@@ -31,7 +31,14 @@
   position: absolute;
   width: 100%;
   top: 10px;
-  left: 10px;
+  left: 0px;
+  animation: slide 0.5s forwards;
+  animation-delay: 1s;
+  transition: all 1s;
+}
+
+@keyframes slide {
+    100% { transform: translateX(10px); }
 }
 
 
@@ -115,7 +122,6 @@
   background: #e64f34;
   color: whitesmoke;
   box-shadow: 0 6px #e4381a;
-  /* z-index: 1; */
 }
 
 .Hangman-restartBtn:hover {

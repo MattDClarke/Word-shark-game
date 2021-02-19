@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { randomWord } from './words';
-import useGuessedState from './hooks/useGuessedState';
+import guessReducer from './reducer/guess.reducer';
 import './WordShark.css';
 import background from './images/word-shark_background.jpg';
 import img0 from './images/0.svg';
@@ -13,22 +13,39 @@ import img6 from './images/6.svg';
 import img7 from './images/7.svg';
 import img8 from './images/8.svg';
 
-function WordShark({maxWrong, images, letters}) {
-  const { guessed, answer, nWrong, guessedWord, handleGuess, restart } = useGuessedState(randomWord);
+
+// set initial state
+export const init = randomWord => ({
+  guessed: new Set(),
+  answer: randomWord,
+  nWrong: 0,
+});
 
 
+function WordShark({ maxWrong, images, letters }) {
+  const [state, dispatch] = useReducer(guessReducer, randomWord(), init);
+  const { guessed, answer, nWrong } = state; 
+  
   const generateButtons = (alphabet) => {
+    console.log('genBtns funct');
     return alphabet.split("").map(letter => (
         <button
           key={letter}
           value={letter}
-          onClick={handleGuess}
+          onClick={() => dispatch({ type: "HANDLE_GUESS", letter, guessed, nWrong, answer })}
           disabled={guessed.has(letter)}
           className="ltrBtn"
         >
           {letter}
         </button>
       ));
+  }
+
+  function guessedWord() {
+    console.log("guessedWord");
+      return answer
+          .split("")
+        .map(letter => (guessed.has(letter) ? letter : "_"));
   }
 
   const gameOver = nWrong >= maxWrong;
@@ -58,14 +75,14 @@ function WordShark({maxWrong, images, letters}) {
       </div>
       <div className="letter-buttons">
         {gameState}
-        <button className="Hangman-restartBtn" onClick={restart}>Restart</button>
+        <button className="Hangman-restartBtn" onClick={() => dispatch({ type: "RESTART", randomWord: randomWord()})}>Restart</button>
       </div>
     </div>
   );
 }
 
 WordShark.defaultProps = {
-  // maxWrong: 8,
+  maxWrong: 8,
   images: [img0, img1, img2, img3, img4, img5, img6, img7, img8],
   letters: "abcdefghijklmnopqrstuvwxyz"
 }
