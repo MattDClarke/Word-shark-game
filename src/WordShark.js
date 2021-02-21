@@ -17,19 +17,17 @@ import img8 from './images/8.svg';
 // set initial state
 export const init = randomWord => ({
   guessed: new Set(),
-  answer: randomWord,
+  answer: randomWord(),
   nWrong: 0,
 });
 
-
 function WordShark({ maxWrong, images, letters }) {
-  const [state, dispatch] = useReducer(guessReducer, randomWord(), init);
+  const [state, dispatch] = useReducer(guessReducer, randomWord, init);
   const { guessed, answer, nWrong } = state; 
   
   const generateButtons = (alphabet) => {
-    console.log('genBtns funct');
     return alphabet.split("").map(letter => (
-        <button
+      <button 
           key={letter}
           value={letter}
           onClick={() => dispatch({ type: "HANDLE_GUESS", letter, guessed, nWrong, answer })}
@@ -42,7 +40,8 @@ function WordShark({ maxWrong, images, letters }) {
   }
 
   function guessedWord() {
-    console.log("guessedWord");
+    console.log('word //');
+    console.log(answer);
       return answer
           .split("")
         .map(letter => (guessed.has(letter) ? letter : "_"));
@@ -75,7 +74,7 @@ function WordShark({ maxWrong, images, letters }) {
       </div>
       <div className="letter-buttons">
         {gameState}
-        <button className="Hangman-restartBtn" onClick={() => dispatch({ type: "RESTART", randomWord: randomWord()})}>Restart</button>
+        <button className="Hangman-restartBtn" onClick={() => dispatch({ type: "RESTART", randomWord, answer })}>Restart</button>
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 var ENGLISH_WORDS = [
-  "anthropomorphism",
-  "stomachache",
-  "fever",
-  "doctor",
-  "medicine",
-  "rest", 
+  // "anthropomorphism",
+  // "stomachache",
+  // "fever",
+  // "doctor",
+  // "medicine",
+  // "rest", 
   "cold",
   "can",
-  "encyclopedia",
-  "supercalafragalisticexpialadocious"
+  // "encyclopedia",
+  // "supercalafragalisticexpialadocious"
 ];
 
 function randomWord() {

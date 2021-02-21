@@ -92,15 +92,19 @@
   border-radius: 10px;
 }
 
-.ltrBtn:hover {
-  background-color: #ff9800;
-}
-
 .ltrBtn {
   color: black;
   padding: 0 1rem;
   background: #ffc107;
   box-shadow: 0 6px #ff9800;
+}
+
+.ltrBtn:hover {
+  background-color: #ff9800;
+}
+
+.ltrBtn:focus {
+  background-color: #ff9800;
 }
 
 .ltrBtn:disabled {
@@ -127,6 +131,11 @@
 .Hangman-restartBtn:hover {
   background-color: #e4381a;
 }
+
+.Hangman-restartBtn:focus {
+  background-color: #e4381a;
+}
+
 
 .Hangman-msg-lose {
   flex: 1;
