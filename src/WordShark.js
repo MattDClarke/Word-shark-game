@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import { randomWord } from './words';
 import guessReducer from './reducer/guess.reducer';
+
 import './WordShark.css';
 import background from './images/word-shark_background.jpg';
 import img0 from './images/0.svg';
@@ -13,7 +14,6 @@ import img6 from './images/6.svg';
 import img7 from './images/7.svg';
 import img8 from './images/8.svg';
 
-
 // set initial state
 export const init = randomWord => ({
   guessed: new Set(),
@@ -24,13 +24,14 @@ export const init = randomWord => ({
 function WordShark({ maxWrong, images, letters }) {
   const [state, dispatch] = useReducer(guessReducer, randomWord, init);
   const { guessed, answer, nWrong } = state; 
-  
+
+
   const generateButtons = (alphabet) => {
     return alphabet.split("").map(letter => (
       <button 
           key={letter}
           value={letter}
-          onClick={() => dispatch({ type: "HANDLE_GUESS", letter, guessed, nWrong, answer })}
+        onClick={() => dispatch({ type: "HANDLE_GUESS", letter, guessed, nWrong, answer  })}
           disabled={guessed.has(letter)}
           className="ltrBtn"
         >
@@ -39,13 +40,22 @@ function WordShark({ maxWrong, images, letters }) {
       ));
   }
 
+  function randomWordPreventDuplicate() {
+      const oldRandomWord = answer;
+      let newRandomWord = randomWord();
+      if (newRandomWord !== oldRandomWord) {
+        return dispatch({ type: "RESTART", answer: newRandomWord });
+      } else {
+        randomWordPreventDuplicate();
+      }
+  }
+
   function guessedWord() {
-    console.log('word //');
-    console.log(answer);
       return answer
           .split("")
         .map(letter => (guessed.has(letter) ? letter : "_"));
   }
+
 
   const gameOver = nWrong >= maxWrong;
   const isWinner = guessedWord().join('') === answer;
@@ -65,7 +75,7 @@ function WordShark({ maxWrong, images, letters }) {
     <div className='Hangman'>
       <div className="Hangman-imgContainer">
         <img className="Hangman-WordSharkBackgroundImg" src={background} alt="background for Word Shark, showing stickman and shark"/>
-        <img className="Hangman-WordSharkOverlayImgs" src={images[nWrong]} alt={altText} />
+        <img className='Hangman-WordSharkOverlayImgs' src={images[nWrong]} alt={altText} />
       </div>
       <div className="Hangman-guessContainer">
         <p className="Hangman-guessesLeft">{`${maxWrong - nWrong} guess${(nWrong === (maxWrong - 1)) ? '' : 'es'} left`}</p>
@@ -74,7 +84,7 @@ function WordShark({ maxWrong, images, letters }) {
       </div>
       <div className="letter-buttons">
         {gameState}
-        <button className="Hangman-restartBtn" onClick={() => dispatch({ type: "RESTART", randomWord, answer })}>Restart</button>
+        <button className="Hangman-restartBtn" onClick={() => randomWordPreventDuplicate()}>Restart</button>
       </div>
     </div>
   );

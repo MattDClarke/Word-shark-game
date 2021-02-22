@@ -4,7 +4,7 @@ var ENGLISH_WORDS = [
   // "fever",
   // "doctor",
   // "medicine",
-  // "rest", 
+  "rests", 
   "cold",
   "can",
   // "encyclopedia",

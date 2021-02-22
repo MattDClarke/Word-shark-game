@@ -32,15 +32,7 @@
   width: 100%;
   top: 10px;
   left: 0px;
-  animation: slide 0.5s forwards;
-  animation-delay: 1s;
-  transition: all 1s;
 }
-
-@keyframes slide {
-    100% { transform: translateX(10px); }
-}
-
 
 .letter-buttons {
   grid-area: letter-buttons;
